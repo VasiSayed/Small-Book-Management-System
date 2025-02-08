@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block style %}
+    :root {
+        --primary: #795548;
+        --primary-light: #a1887f;
+        --primary-dark: #4b2c20;
+        --accent: #ffd700;
+        --text-light: #ffffff;
+        --text-dark: #2c1810;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f5f3;
+        --spacing-unit: 8px;
+        --radius-sm: 8px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --shadow-sm: 0 2px 4px rgba(44, 24, 16, 0.08);
+        --shadow-md: 0 4px 8px rgba(44, 24, 16, 0.12);
+        --shadow-lg: 0 8px 24px rgba(44, 24, 16, 0.15);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .book-list-container {
+        max-width: 1000px;
+        margin: calc(var(--spacing-unit) * 5) auto;
+        padding: calc(var(--spacing-unit) * 5);
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Elegant Header */
+    .header {
+        text-align: center;
+        margin-bottom: calc(var(--spacing-unit) * 6);
+        position: relative;
+    }
+
+    .header h2 {
+        color: var(--primary-dark);
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: calc(var(--spacing-unit) * 4);
+        position: relative;
+        display: inline-block;
+    }
+
+    .header h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        border-radius: var(--radius-sm);
+    }
+
+    /* Stylish Add Button */
+    .add-book-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--spacing-unit) * 1.5);
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: var(--text-light);
+        padding: calc(var(--spacing-unit) * 1.75) calc(var(--spacing-unit) * 3);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        box-shadow: var(--shadow-md);
+    }
+
+    .add-book-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    }
+
+    /* Book List Layout */
+    .book-list {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0;
+        display: grid;
+        gap: calc(var(--spacing-unit) * 3);
+    }
+
+    /* Sophisticated Book Card */
+    .book-item {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        border-radius: var(--radius-md);
+        padding: calc(var(--spacing-unit) * 4);
+        color: var(--text-light);
+        list-style: none;
+        position: relative;
+        transition: var(--transition);
+        overflow: hidden;
+    }
+
+    .book-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .book-item:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .book-item:hover::before {
+        opacity: 1;
+    }
+
+    /* Book Content Layout */
+    .book-content {
+        position: relative;
+        display: grid;
+        gap: calc(var(--spacing-unit) * 2);
+    }
+
+    /* Book Title Link */
+    .book-link {
+        color: var(--text-light);
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        transition: var(--transition);
+        display: inline-block;
+    }
+
+    .book-link:hover {
+        color: var(--accent);
+        transform: translateX(4px);
+    }
+
+    /* Book Metadata */
+    .book-meta {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: calc(var(--spacing-unit));
+    }
+
+    .book-meta span {
+        color: var(--accent);
+        font-weight: 600;
+    }
+
+    /* Action Buttons */
+    .book-actions {
+        display: flex;
+        gap: calc(var(--spacing-unit) * 2);
+        margin-top: calc(var(--spacing-unit) * 3);
+        padding-top: calc(var(--spacing-unit) * 3);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .action-btn {
+        padding: calc(var(--spacing-unit)) calc(var(--spacing-unit) * 2);
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: calc(var(--spacing-unit));
+    }
+
+    .update-btn {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-light);
+    }
+
+    .delete-btn {
+        background: rgba(255, 87, 34, 0.2);
+        color: #ffccbc;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .delete-btn:hover {
+        background: rgba(255, 87, 34, 0.3);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: calc(var(--spacing-unit) * 8);
+        background: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        color: var(--primary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .book-list-container {
+            margin: var(--spacing-unit);
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        .header h2 {
+            font-size: 2rem;
+        }
+
+        .book-item {
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        .book-link {
+            font-size: 1.25rem;
+        }
+
+        .book-actions {
+            flex-direction: column;
+        }
+
+        .action-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+{% endblock %}
+
+{% block content %}
+<div class="book-list-container">
+    <div class="header">
+        <h2>Personal Library</h2>
+        <a href="{% url 'book-create' %}" class="add-book-btn">
+            <i class="fas fa-plus"></i>
+            Add to Collection
+        </a>
+    </div>
+    
+    <ul class="book-list">
+        {% if book %}
+        <li class="book-item">
+            <div class="book-content">
+                <a href="{% url 'book-detail' book.pk %}" class="book-link">{{ book.title }}</a>
+                <p class="book-meta">
+                    <i class="fas fa-user"></i>
+                    Author: <span>{{ book.author }}</span>
+                </p>
+                <p class="book-meta">
+                    <i class="fas fa-bookmark"></i>
+                    Genre: <span>{{ book.genre }}</span>
+                </p>
+                <p class="book-meta">
+                    <i class="fas fa-calendar"></i>
+                    Published: <span>{{ book.publication_date }}</span>
+                </p>
+                {% if book.description %}
+                <p class="book-meta">
+                    <i class="fas fa-quote-left"></i>
+                    <span>{{ book.description|truncatewords:30 }}</span>
+                </p>
+                {% endif %}
+                
+                <div class="book-actions">
+                    <a href="{% url 'book-update' book.pk %}" class="action-btn update-btn">
+                        <i class="fas fa-edit"></i>
+                        Update
+                    </a>
+                    <a href="{% url 'book-delete' book.pk %}" class="action-btn delete-btn">
+                        <i class="fas fa-trash"></i>
+                        Delete
+                    </a>
+                </div>
+            </div>
+        </li>
+        {% else %}
+        <li class="empty-state">
+            <i class="fas fa-books fa-3x"></i>
+            <h3>Your Library Awaits</h3>
+            <p>Begin your literary journey by adding your first book.</p>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
