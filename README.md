@@ -1,4 +1,4 @@
-# Book Management System
+# Small Book Management System
 
 ## Overview
 
